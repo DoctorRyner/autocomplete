@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "alwaysStrict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "jsx": "react"
+  }
+}

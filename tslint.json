@@ -1,0 +1,23 @@
+{
+    "rules": {
+        "max-line-length": {
+            "options": [120]
+        },
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-consecutive-blank-lines": false,
+        "no-var-keyword": true,
+        "no-empty": true,
+        "no-for-in-array": true,
+        "no-null-keyword": true,
+        "no-unused-variable": true,
+        "no-parameter-reassignment": true,
+        "no-shadowed-variable": true,
+        "no-unsafe-any": true,
+        "semicolon": false,
+        "prefer-const": true,
+        "prefer-conditional-expression": true
+    }
+}
