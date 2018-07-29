@@ -3,21 +3,23 @@ import styled from 'styled-components'
 
 import Completion from './Completion'
 
-const Wrapper = styled.div`
-    margin: 10px 20px;
-`
+const
+    focusedColor = '#005ff7ad',
+    fontColor = '#404040',
 
-const focusedColor = '#005ff7ad'
-const fontColor = '#404040';
+    Wrapper = styled.div`
+        margin: 10px 20px;
+    `,
 
-const TextField = styled.input`
-    margin-top: 5px;
-    padding-left: 7px;
-    height: 30px;
-    width: 270px;
-    color: ${fontColor};
-    ${(props: any) => props.isFocused && `outline: 2.5px solid ${focusedColor}`}
-`
+    TextField = styled.input`
+        margin-top: 5px;
+        padding-left: 7px;
+        height: 30px;
+        width: 270px;
+        color: ${fontColor};
+        ${(props: any) => props.isFocused && `outline: 2.5px solid ${focusedColor}`}
+    `
+
 const changeHandle = e => (changeAutocompleteValue: Function) => (setShouldBeDisplayed: Function) => {
     changeAutocompleteValue(e.currentTarget.value)
     setShouldBeDisplayed(e.currentTarget.value != '' ? true : false)

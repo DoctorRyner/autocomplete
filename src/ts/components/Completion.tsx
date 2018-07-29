@@ -6,25 +6,24 @@ import AutocompleteElement from './AutcompleteElement'
 
 const
     fullHeight = '350px',
-    emptyHeight = '50px'
+    emptyHeight = '50px',
 
+    appearAnim = keyframes`
+        from { opacity: 0 }
+        to { opacity: 1 }
+    `,
 
-const appearAnim = keyframes`
-    from { opacity: 0 }
-    to { opacity: 1 }
-`
-
-const Panel = styled.div`
-    position: absolute;
-    width: 277px;
-    height: ${(props: any) => props.data.size == 0 ? emptyHeight : fullHeight};
-    background-color: #ffffff;
-    border-left: 2px solid #5f5f5f36;
-    border-right: 2px solid #5f5f5f36;
-    border-bottom: 2px solid #5f5f5f36;
-    animation: ${appearAnim} 0.2s ease 1;
-    overflow: scroll;
-`
+    Panel = styled.div`
+        position: absolute;
+        width: 277px;
+        height: ${(props: any) => props.data.size == 0 ? emptyHeight : fullHeight};
+        background-color: #ffffff;
+        border-left: 2px solid #5f5f5f36;
+        border-right: 2px solid #5f5f5f36;
+        border-bottom: 2px solid #5f5f5f36;
+        animation: ${appearAnim} 0.2s ease 1;
+        overflow: scroll;
+    `
 
 const Complition = props => <Panel width={props.width} height={props.height} data={props.data}>
     {compose (
