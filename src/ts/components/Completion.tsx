@@ -52,7 +52,7 @@ const Completion = props => {
                         isFindAny={true} // Переменная отвечающая за режим отображения
                     />
                 ) (cities)
-            // Иначе выводим надпись ненайдено
+            // Иначе выводим надпись "Не найдено"
                 : <AutocompleteElement
                     key={0}
                     value='Не найдено'
