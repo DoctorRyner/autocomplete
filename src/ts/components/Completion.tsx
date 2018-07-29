@@ -5,14 +5,16 @@ import { map, compose, take, filter } from 'ramda'
 import AutocompleteElement from './AutcompleteElement'
 
 const
-    fullHeight = '350px',
-    emptyHeight = '50px',
+    fullHeight = '350px', // Максимальная высота
+    emptyHeight = '50px', // Минимальная высота
 
+    // Анимация появления панели автодополнения
     appearAnim = keyframes`
         from { opacity: 0 }
         to { opacity: 1 }
     `,
 
+    // Стилизация панели автодополнения
     Panel = styled.div`
         position: absolute;
         width: 277px;
@@ -25,15 +27,20 @@ const
         overflow: scroll;
     `
 
+// Компонент панели / списка автодополнения
+// Complition :: {} -> JSX
 const Complition = props => {
+    // Фильтруем элементы для получения списка для отображения
     const cities: any = compose (
         map((el: any) => el),
         take(20),
         filter((el: any) => el.get('City').toLowerCase().startsWith(props.value.toLowerCase()))
     ) (props.data)
     
+    // Рендерим панель автодополнения
     return <Panel width={props.width} height={props.height} data={props.data}>
         {
+            // При условии что tmpValue равняется чему то, то выводим список городов
             props.tmpValue
                 ? map((el: any) =>
                     <AutocompleteElement
@@ -42,16 +49,17 @@ const Complition = props => {
                         changeAutocompleteValue={props.changeAutocompleteValue}
                         setIsNeverFocused={props.setIsNeverFocused}
                         setChoosedValue={props.setChoosedValue}
-                        isFindAny={true}
+                        isFindAny={true} // Переменная отвечающая за режим отображения
                     />
                 ) (cities)
+            // Иначе выводим надпись ненайдено
                 : <AutocompleteElement
                     key={0}
                     value='Не найдено'
                     changeAutocompleteValue={props.changeAutocompleteValue}
                     setIsNeverFocused={props.setIsNeverFocused}
                     setChoosedValue={props.setChoosedValue}
-                    isFindAny={false}
+                    isFindAny={false} // При false не выделяется и не реагирует на нажатия
                 />
         }
     </Panel>

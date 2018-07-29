@@ -16,6 +16,8 @@ const
         font-weight: 900;
     `
 
+// Декоративный компонент для отображения "шапки" приложения
+// Header :: () -> JSX
 const Header = () => <Panel>
     <Title>Autocomplete</Title>
 </Panel>
