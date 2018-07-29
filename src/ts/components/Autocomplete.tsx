@@ -62,7 +62,11 @@ const changeHandle = e =>
     setShouldBeDisplayed(e.currentTarget.value != '' ? true : false)
     choosedValue != '' && setChoosedValue('')
     const newValue = e.currentTarget.value
-    axios.get('./json/kladr.json')
+
+    // const localUrl = './json/kladr.json'
+    const webUrl = 'https://raw.githubusercontent.com/DoctorRyner/autocomplete/master/src/json/kladr.json'
+
+    axios(webUrl)
         .then((jsonFile: any) => {
             setAutocompleteData(jsonFile.data)
             const cities: any = compose (
@@ -74,7 +78,6 @@ const changeHandle = e =>
                 () => setTmpValue(''),
                 (el): any => setTmpValue(el.City)
             )
-            console.log(cities.lenght)
         })
         .catch(error => console.log(error))
 }
