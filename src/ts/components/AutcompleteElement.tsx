@@ -6,16 +6,19 @@ const
     hoverBgColor = '#3164d1b6',
     hoverFontColor = 'white',
 
-    Element = styled.div`&:hover { background-color: ${hoverBgColor} }`,
+    Element = styled.div`
+        ${(props: any) => props.isFindAny && `&:hover { background-color: ${hoverBgColor} }`}
+    `,
 
     Text = styled.p`
         color: ${fontColor};
         padding: 5px 7px;
-        &:hover { color: ${hoverFontColor} }
+        ${(props: any) => props.isFindAny && `&:hover { color: ${hoverFontColor} }`}
     `
 
 const AutocompleteElement = props =>
-    <Element 
+    <Element
+        isFindAny={props.isFindAny}
         onMouseDown={() => {
             if(!props.isFindAny) return
             props.changeAutocompleteValue(props.value)
@@ -23,7 +26,7 @@ const AutocompleteElement = props =>
             props.setChoosedValue(props.value)
         }}
     >
-        <Text>{props.value}</Text>
+        <Text isFindAny={props.isFindAny}>{props.value}</Text>
     </Element>
 
 export default AutocompleteElement
