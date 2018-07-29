@@ -7,7 +7,6 @@ import reducer from './reducers/main' // Главный, комбинирова�
 // Библиотека для функционального программирования
 import { forEachObjIndexed as forEachObj } from 'ramda'
 import { Map } from 'immutable' // Библиотека с персистентными структурами
-import axios from 'axios'
 
 import Header from './components/Header'
 import Autocomplete from './components/Autocomplete'
@@ -36,10 +35,15 @@ const ReduxApp = props => <>
         isFocused={props.isFocused}
         data={props.data}
         shouldBeDisplayed={props.shouldBeDisplayed}
+        isNeverFocused={props.isNeverFocused}
+        choosedValue={props.choosedValue}
 
         changeAutocompleteValue={props.changeAutocompleteValue}
         setShouldBeDisplayed={props.setShouldBeDisplayed}
         setIsFocused={props.setIsFocused}
+        setIsNeverFocused={props.setIsNeverFocused}
+        setAutocompleteData={props.setAutocompleteData}
+        setChoosedValue={props.setChoosedValue}
     />
 </>
 
@@ -54,7 +58,11 @@ const App = connect(
         // isFocused :: Boolean
         isFocused: state.autocomplete.get('isFocused'),
         // data :: List
-        data: state.autocomplete.get('data')
+        data: state.autocomplete.get('data'),
+        // isNeverFocused :: Boolean
+        isNeverFocused: state.autocomplete.get('isNeverFocused'),
+        // choosedValue :: String
+        choosedValue: state.autocomplete.get('choosedValue')
     }),
     dispatch => ({
         // changeAutocompleteValue :: String -> IO()
@@ -62,12 +70,15 @@ const App = connect(
         // setShouldBeDisplayed :: Boolean -> IO()
         setShouldBeDisplayed: payload => dispatch({ type: 'SET_SHOULD_BE_DISPLAYED', payload }),
         // setIsFocused :: Boolean -> IO()
-        setIsFocused: payload => dispatch({ type: 'SET_IS_FOCUSED', payload })
+        setIsFocused: payload => dispatch({ type: 'SET_IS_FOCUSED', payload }),
+        // setIsNeverFocused :: Boolean -> IO()
+        setIsNeverFocused: payload => dispatch({ type: 'SET_IS_NEVER_FOCUSED', payload }),
+        // setAutocompleteData :: List -> IO()
+        setAutocompleteData: payload => dispatch({ type: 'SET_AUTOCOMPLETE_DATA', payload }),
+        // setChoosedValue :: String -> IO()
+        setChoosedValue: payload => dispatch({ type: 'SET_CHOOSED_VALUE', payload })
     })
 ) (ReduxApp)
-
-axios('./json/kladr.json')
-    .then((jsonFile: any) => store.dispatch({ type: 'SET_AUTOCOMPLETE_DATA', payload: jsonFile.data }))
 
 // Может быть рендерим приложение, если имеется div с ID app
 Maybe.fromNull(document.getElementById('app')).cata(

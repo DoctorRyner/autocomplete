@@ -32,6 +32,8 @@ const Complition = props => <Panel width={props.width} height={props.height} dat
                 key={el.get('Id')}
                 value={el.get('City')}
                 changeAutocompleteValue={props.changeAutocompleteValue}
+                setIsNeverFocused={props.setIsNeverFocused}
+                setChoosedValue={props.setChoosedValue}
             />),
         take(20),
         filter((el: any) => el.get('City').toLowerCase().startsWith(props.value.toLowerCase()))

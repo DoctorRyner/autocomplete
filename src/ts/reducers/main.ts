@@ -8,6 +8,8 @@ const autocompleteInit = Map({
     data: List([]),
     shouldBeDisplayed: false,
     isFocused: false,
+    isNeverFocused: true,
+    choosedValue: '',
 })
 
 // autocomplete :: Map -> {} -> Map
@@ -16,6 +18,8 @@ const autocomplete = (state: Map<any, any> = autocompleteInit, action) =>
     : action.type == 'SET_AUTOCOMPLETE_DATA' ? state.set('data', fromJS(action.payload))
     : action.type == 'SET_SHOULD_BE_DISPLAYED' ? state.set('shouldBeDisplayed', action.payload)
     : action.type == 'SET_IS_FOCUSED' ? state.set('isFocused', action.payload)
+    : action.type == 'SET_IS_NEVER_FOCUSED' ? state.set('isNeverFocused', action.payload)
+    : action.type == 'SET_CHOOSED_VALUE' ? state.set('choosedValue', action.payload)
     : state
 
 export default combineReducers({ autocomplete })
