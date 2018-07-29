@@ -12,8 +12,8 @@ const autocompleteInit = Map({
 
 // autocomplete :: Map -> {} -> Map
 const autocomplete = (state: Map<any, any> = autocompleteInit, action) =>
-      action.type == 'CHANGE_AUTOcomplete_VALUE' ? state.set('value', action.payload)
-    : action.type == 'SET_AUTOcomplete_DATA' ? state.set('data', fromJS(action.payload))
+      action.type == 'CHANGE_AUTOCOMPLETE_VALUE' ? state.set('value', action.payload)
+    : action.type == 'SET_AUTOCOMPLETE_DATA' ? state.set('data', fromJS(action.payload))
     : action.type == 'SET_SHOULD_BE_DISPLAYED' ? state.set('shouldBeDisplayed', action.payload)
     : action.type == 'SET_IS_FOCUSED' ? state.set('isFocused', action.payload)
     : state

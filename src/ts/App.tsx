@@ -17,7 +17,7 @@ const store = createStore(reducer)
 
 // Из-за того, что мы используем immutablejs, создаем
 // мануальный loger для дебагинга во время разработки
-// это позволит на просмотреть все редьюсеры из стейта
+// это позволит нам просмотреть все редьюсеры из стейта
 
 // storeLog :: {} -> IO()
 const storeLog = (reducers: object) => forEachObj(
@@ -35,10 +35,10 @@ const ReduxApp = props => <>
         value={props.value}
         isFocused={props.isFocused}
         data={props.data}
+        shouldBeDisplayed={props.shouldBeDisplayed}
 
         changeAutocompleteValue={props.changeAutocompleteValue}
         setShouldBeDisplayed={props.setShouldBeDisplayed}
-        shouldBeDisplayed={props.shouldBeDisplayed}
         setIsFocused={props.setIsFocused}
     />
 </>
@@ -58,7 +58,7 @@ const App = connect(
     }),
     dispatch => ({
         // changeAutocompleteValue :: String -> IO()
-        changeAutocompleteValue: payload => dispatch({ type: 'CHANGE_AUTOcomplete_VALUE', payload }),
+        changeAutocompleteValue: payload => dispatch({ type: 'CHANGE_AUTOCOMPLETE_VALUE', payload }),
         // setShouldBeDisplayed :: Boolean -> IO()
         setShouldBeDisplayed: payload => dispatch({ type: 'SET_SHOULD_BE_DISPLAYED', payload }),
         // setIsFocused :: Boolean -> IO()
@@ -67,7 +67,7 @@ const App = connect(
 ) (ReduxApp)
 
 axios('./json/kladr.json')
-    .then((jsonFile: any) => store.dispatch({ type: 'SET_AUTOcomplete_DATA', payload: jsonFile.data }))
+    .then((jsonFile: any) => store.dispatch({ type: 'SET_AUTOCOMPLETE_DATA', payload: jsonFile.data }))
 
 // Может быть рендерим приложение, если имеется div с ID app
 Maybe.fromNull(document.getElementById('app')).cata(
