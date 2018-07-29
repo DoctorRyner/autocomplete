@@ -29,7 +29,7 @@ const
 
 // Компонент панели / списка автодополнения
 // Complition :: {} -> JSX
-const Complition = props => {
+const Completion = props => {
     // Фильтруем элементы для получения списка для отображения
     const cities: any = compose (
         map((el: any) => el),
@@ -65,4 +65,4 @@ const Complition = props => {
     </Panel>
 }
 
-export default Complition
+export default Completion
