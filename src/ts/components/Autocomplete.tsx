@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-import Complition from './Completion'
+import Completion from './Completion'
 
 const Wrapper = styled.div`
     margin: 10px 20px;
@@ -38,7 +38,7 @@ const Autocomplete = props => <Wrapper>
         onBlur={() => (props.setIsFocused(false), props.shouldBeDisplayed && props.setShouldBeDisplayed(false))}
     />
     {props.shouldBeDisplayed &&
-        <Complition
+        <Completion
             width={props.width}
             height={props.height}
             data={props.data}
