@@ -37,6 +37,7 @@ const ReduxApp = props => <>
         shouldBeDisplayed={props.shouldBeDisplayed}
         isNeverFocused={props.isNeverFocused}
         choosedValue={props.choosedValue}
+        tmpValue={props.tmpValue}
 
         changeAutocompleteValue={props.changeAutocompleteValue}
         setShouldBeDisplayed={props.setShouldBeDisplayed}
@@ -44,6 +45,7 @@ const ReduxApp = props => <>
         setIsNeverFocused={props.setIsNeverFocused}
         setAutocompleteData={props.setAutocompleteData}
         setChoosedValue={props.setChoosedValue}
+        setTmpValue={props.setTmpValue}
     />
 </>
 
@@ -62,7 +64,9 @@ const App = connect(
         // isNeverFocused :: Boolean
         isNeverFocused: state.autocomplete.get('isNeverFocused'),
         // choosedValue :: String
-        choosedValue: state.autocomplete.get('choosedValue')
+        choosedValue: state.autocomplete.get('choosedValue'),
+        // tmpValue :: String
+        tmpValue: state.autocomplete.get('tmpValue')
     }),
     dispatch => ({
         // changeAutocompleteValue :: String -> IO()
@@ -76,7 +80,9 @@ const App = connect(
         // setAutocompleteData :: List -> IO()
         setAutocompleteData: payload => dispatch({ type: 'SET_AUTOCOMPLETE_DATA', payload }),
         // setChoosedValue :: String -> IO()
-        setChoosedValue: payload => dispatch({ type: 'SET_CHOOSED_VALUE', payload })
+        setChoosedValue: payload => dispatch({ type: 'SET_CHOOSED_VALUE', payload }),
+        // setTmpValue :: String -> IO()
+        setTmpValue: payload => dispatch({ type: 'SET_TMP_VALUE', payload })
     })
 ) (ReduxApp)
 

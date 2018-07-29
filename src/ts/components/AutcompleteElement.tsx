@@ -17,6 +17,7 @@ const
 const AutocompleteElement = props =>
     <Element 
         onMouseDown={() => {
+            if(!props.isFindAny) return
             props.changeAutocompleteValue(props.value)
             props.setIsNeverFocused(true)
             props.setChoosedValue(props.value)

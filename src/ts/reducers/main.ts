@@ -10,6 +10,7 @@ const autocompleteInit = Map({
     isFocused: false,
     isNeverFocused: true,
     choosedValue: '',
+    tmpValue: ''
 })
 
 // autocomplete :: Map -> {} -> Map
@@ -20,6 +21,7 @@ const autocomplete = (state: Map<any, any> = autocompleteInit, action) =>
     : action.type == 'SET_IS_FOCUSED' ? state.set('isFocused', action.payload)
     : action.type == 'SET_IS_NEVER_FOCUSED' ? state.set('isNeverFocused', action.payload)
     : action.type == 'SET_CHOOSED_VALUE' ? state.set('choosedValue', action.payload)
+    : action.type == 'SET_TMP_VALUE' ? state.set('tmpValue', action.payload)
     : state
 
 export default combineReducers({ autocomplete })

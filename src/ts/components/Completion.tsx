@@ -16,7 +16,7 @@ const
     Panel = styled.div`
         position: absolute;
         width: 277px;
-        height: ${(props: any) => props.data.size == 0 ? emptyHeight : fullHeight};
+        max-height: ${(props: any) => props.data.size == 0 ? emptyHeight : fullHeight};
         background-color: #ffffff;
         border-left: 2px solid #5f5f5f36;
         border-right: 2px solid #5f5f5f36;
@@ -25,19 +25,36 @@ const
         overflow: scroll;
     `
 
-const Complition = props => <Panel width={props.width} height={props.height} data={props.data}>
-    {compose (
-        map((el: any) =>
-            <AutocompleteElement
-                key={el.get('Id')}
-                value={el.get('City')}
-                changeAutocompleteValue={props.changeAutocompleteValue}
-                setIsNeverFocused={props.setIsNeverFocused}
-                setChoosedValue={props.setChoosedValue}
-            />),
+const Complition = props => {
+    const cities: any = compose (
+        map((el: any) => el),
         take(20),
         filter((el: any) => el.get('City').toLowerCase().startsWith(props.value.toLowerCase()))
-    ) (props.data)}
-</Panel>
+    ) (props.data)
+    
+    return <Panel width={props.width} height={props.height} data={props.data}>
+        {
+            props.tmpValue
+                ? map((el: any) =>
+                    <AutocompleteElement
+                        key={el.get('Id')}
+                        value={el.get('City')}
+                        changeAutocompleteValue={props.changeAutocompleteValue}
+                        setIsNeverFocused={props.setIsNeverFocused}
+                        setChoosedValue={props.setChoosedValue}
+                        isFindAny={true}
+                    />
+                ) (cities)
+                : <AutocompleteElement
+                    key={0}
+                    value='Не найдено'
+                    changeAutocompleteValue={props.changeAutocompleteValue}
+                    setIsNeverFocused={props.setIsNeverFocused}
+                    setChoosedValue={props.setChoosedValue}
+                    isFindAny={false}
+                />
+        }
+    </Panel>
+}
 
 export default Complition

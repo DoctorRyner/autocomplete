@@ -1,6 +1,8 @@
 import * as React from 'react'
 import styled, { keyframes } from 'styled-components'
 import axios from 'axios'
+import { Maybe } from 'monet'
+import { map, compose, take, filter } from 'ramda'
 
 import Completion from './Completion'
 
@@ -54,13 +56,27 @@ const changeHandle = e =>
 (setShouldBeDisplayed: Function) =>
 (setAutocompleteData: Function) =>
 (setChoosedValue: Function) =>
-(choosedValue: string) => {
-    axios.get('./json/kladr.json')
-        .then((jsonFile: any) => setAutocompleteData(jsonFile.data))
-        .catch(error => console.log(error))
+(choosedValue: string) =>
+(setTmpValue: Function) => {
     changeAutocompleteValue(e.currentTarget.value)
     setShouldBeDisplayed(e.currentTarget.value != '' ? true : false)
     choosedValue != '' && setChoosedValue('')
+    const newValue = e.currentTarget.value
+    axios.get('./json/kladr.json')
+        .then((jsonFile: any) => {
+            setAutocompleteData(jsonFile.data)
+            const cities: any = compose (
+                map((el: any) => el),
+                take(20),
+                filter((el: any) => el.City.toLowerCase().startsWith(newValue.toLowerCase()))
+            ) (jsonFile.data)
+            Maybe.fromNull(cities[0]).cata(
+                () => setTmpValue(''),
+                (el): any => setTmpValue(el.City)
+            )
+            console.log(cities.lenght)
+        })
+        .catch(error => console.log(error))
 }
 
 const Autocomplete = props => <Wrapper>
@@ -80,15 +96,19 @@ const Autocomplete = props => <Wrapper>
                 (props.setAutocompleteData)
                 (props.setChoosedValue)
                 (props.choosedValue)
+                (props.setTmpValue)
         }
-        onFocus={() => {
+        onFocus={e => {
             props.setIsFocused(true)
             props.value != '' && props.setShouldBeDisplayed(true)
             props.isNeverFocused && props.setIsNeverFocused(false)
+            e.target.select()
         }}
         onBlur={() => {
             props.setIsFocused(false)
             props.shouldBeDisplayed && props.setShouldBeDisplayed(false)
+            props.tmpValue.toLowerCase() == props.value.toLowerCase() &&
+                (props.setChoosedValue(props.tmpValue), props.changeAutocompleteValue(props.tmpValue))
         }}
     />
     {props.shouldBeDisplayed &&
@@ -97,9 +117,12 @@ const Autocomplete = props => <Wrapper>
             height={props.height}
             data={props.data}
             value={props.value}
+            tmpValue={props.tmpValue}
+
             changeAutocompleteValue={props.changeAutocompleteValue}
             setIsNeverFocused={props.setIsNeverFocused}
             setChoosedValue={props.setChoosedValue}
+            setTmpValue={props.setTmpValue}
         />}
     {!props.isFocused && !props.isNeverFocused && props.choosedValue == '' && <ErrorMessage>
         <p>⬆︎ Выберите значение из списка</p>
